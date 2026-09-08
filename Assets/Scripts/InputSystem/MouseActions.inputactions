@@ -1,0 +1,57 @@
+{
+    "version": 1,
+    "name": "MouseActions",
+    "maps": [
+        {
+            "name": "MouseAction",
+            "id": "bfc1a1f9-5c8b-4f40-848a-ea9edbfa9198",
+            "actions": [
+                {
+                    "name": "LeftButton",
+                    "type": "Button",
+                    "id": "4e880ee5-f64f-4d1f-9c2a-e2c3f5b35877",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "Position",
+                    "type": "Value",
+                    "id": "8c40f9be-b237-4d7a-8730-c3a3cc6d1451",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true,
+                    "priority": 0
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "8a6377c5-8d3a-48d6-ac25-ec128f882aa4",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a610e1b8-873f-43cb-81a9-a0151dd0dae4",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Position",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
