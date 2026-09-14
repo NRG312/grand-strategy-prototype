@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using Zenject;
 
-public class ArmyUI : MonoBehaviour
+public class ArmyProvinceUI : MonoBehaviour
 {
     [Inject] private SignalBus _signal;
     [Inject] private ArmyManager army_manager;

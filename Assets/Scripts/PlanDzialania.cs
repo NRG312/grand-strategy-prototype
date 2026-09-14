@@ -14,9 +14,9 @@ public class PlanDzialania : MonoBehaviour
 
     //Na czym skonczylem i dalsza praca
 
-    //Skonczylem na robieniu Armii w UnitArmy robie wstepna wizualna strone i trzeba zrobic UnitArmy i stworzenie jej w samej grze
+    //Skonczylem na robieniu box selectora 
 
-    //
+    //Musze zrobic zaznaczenie wielu jednostek na raz(albo osobna funkcja do zwracania obiektow albo po endSelection), Dokonczenie UI dla jednostek, usuwanie jednostek z garnizonu po stworzeniu armii, usuwanie armii i odeslanie do garnizonu jednostek
 
 
 
@@ -44,11 +44,14 @@ public class PlanDzialania : MonoBehaviour
     //Guzik w panelu province transfer -> ProvinceUI(setnewowenr) po ID -> Province(setnewowner) -> NationManager po ID wyszukuje dana nacje -> zwraca Nacje i province przypisuje nowego ownera
 
 
-    //Armia przeplyw danych do wyswietlenia UI
+    //Armia przeplyw danych do wyswietlenia UI w ArmyProvince
     //Garnizon(klasa w Province)(trzyma referencje UnitType) -> ArmyUI sprawdza garnizon poprzez selected_province -> zapisuje w swojej liscie(UnitType) -> wyswietla dane na TMP_text
+    //Armia przeplyw danych do wysweitlenia UI w ArmyUI
+    // -------------------> tutaj dopisz jak zrobisz
     //Tworzenie Armii
-    //ArmyManager(Create Army) -> z objectPoola pobiera wolna jednostke -> tworzy jednostke z UnitArmy i przypisuje jej wszystkie dane//(to popraw gdy zrobisz ta funkcje)
-
+    //ArmyManager(Create Army) -> z objectPoola pobiera wolna jednostke -> tworzy jednostke z UnitArmy i przypisuje jej wszystkie dane -> ustawia pozycje i pobiera liste garnizonu do swoich jednostek
+    //Zaznaczanie armii(z box selectorem)
+    //MapSelector -> wykrywa czy zaznaczam wiele obiektor -> przekazuje startposition i dane o zaznaczaniu wielu obiektow -> boxselector tworzy boxa i sprawdza po layerze co jest w srodku boxa -> zwraca liste obiektow zaznaczonych
 
 
 

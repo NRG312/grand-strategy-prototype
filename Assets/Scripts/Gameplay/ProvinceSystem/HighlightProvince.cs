@@ -34,6 +34,7 @@ public class HighlightProvince : MonoBehaviour
     }
     private void ClearColors()
     {
-
+        selected_province.gameObject.GetComponent<MeshRenderer>().material.color = selected_province.owner_province.Data.NationColor;
+        selected_province = null;
     }
 }
