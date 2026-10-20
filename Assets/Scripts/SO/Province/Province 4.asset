@@ -16,3 +16,6 @@ MonoBehaviour:
   Name_province: Krakow
   Start_owner_ID: GER
   Start_population: 100
+  start_unit_garrison:
+  - unit_type: {fileID: 11400000, guid: 6d013da66b5fe104bb7a8cdd3a3ad524, type: 2}
+    amount: 5

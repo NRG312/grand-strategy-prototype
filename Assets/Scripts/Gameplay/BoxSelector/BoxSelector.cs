@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class BoxSelector : MonoBehaviour
 {
-    public event Action<List<GameObject>> SelectionFinished;
+    public event Action<List<Collider>> SelectionFinished;
     [SerializeField] private RectTransform selection_panel;
     [SerializeField] private LayerMask layer_selecting;
     private List<GameObject> selected_objects = new List<GameObject>();
@@ -52,12 +53,22 @@ public class BoxSelector : MonoBehaviour
         Physics.Raycast(ray1,out StartHit,Mathf.Infinity);
         Physics.Raycast(ray2, out EndHit, Mathf.Infinity);
         Vector3 centerBox = (StartHit.point + EndHit.point) / 2;
-        Vector3 half_extents = new Vector3(Mathf.Abs(EndHit.point.x - StartHit.point.x), 1, Mathf.Abs(EndHit.point.z - StartHit.point.z)); //Box need to have Y > 0 and x,z cant be -
+        Vector3 half_extents = new Vector3(Mathf.Abs(EndHit.point.x - StartHit.point.x) / 2, 1, Mathf.Abs(EndHit.point.z - StartHit.point.z) / 2); //Box need to have Y > 0 and x,z cant be -
+
+        //Collider box
         Collider[] objects = Physics.OverlapBox(centerBox, half_extents, Quaternion.identity,layer_selecting);
-        foreach (var item in objects)
-        {
-            Debug.Log(item.name);
-        }
+        List<Collider> list_of_objects = new List<Collider>();
         selection_panel.gameObject.SetActive(false);
+
+        //If Overlap will detect object center then select it
+        Bounds bounds = new Bounds(centerBox, half_extents * 2);
+        foreach (var item in objects) 
+        {
+            if (bounds.Contains(item.bounds.center))
+            {
+                list_of_objects.Add(item);
+            }
+        }
+        SelectionFinished?.Invoke(list_of_objects);
     }
 }

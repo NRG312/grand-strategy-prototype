@@ -16,3 +16,6 @@ MonoBehaviour:
   Name_province: Gdansk
   Start_owner_ID: POL
   Start_population: 30
+  start_unit_garrison:
+  - unit_type: {fileID: 11400000, guid: d97ae2bd9c391334b9763a8a08717ed9, type: 2}
+    amount: 150

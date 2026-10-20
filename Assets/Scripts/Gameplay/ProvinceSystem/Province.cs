@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using Zenject;
@@ -5,7 +6,7 @@ using Zenject;
 public class Province : MonoBehaviour
 {
     public ProvinceSO province_SO;
-    public Garrison garrison = new Garrison();
+    public Garrison garrison { get; } = new Garrison();
     [Inject] private NationManager nation_manager;
     public string name_province { get; private set; }
     public int id_province { get; private set; }
@@ -18,7 +19,13 @@ public class Province : MonoBehaviour
     //kultura itp
     private void Awake()
     {
-        mesh_province = GetComponent<MeshRenderer>();
+        foreach (Transform child in transform)
+        {
+            if (child.name.StartsWith("Border"))
+            {
+                mesh_province = child.GetComponent<MeshRenderer>();
+            }
+        }
         Init();
     }
     private void Init()
@@ -26,15 +33,15 @@ public class Province : MonoBehaviour
         name_province = province_SO.Name_province;
         id_province = province_SO.ID_province;
         population_province = province_SO.Start_population;
+        garrison.AddUnits(province_SO.start_unit_garrison);
     }
     public void InitOwner(Nation nation)
     {
-        if (nation != null)
-        {
-            owner_province = nation;
-            owner_province.AddNewProvince(this);
-            SetColorProvince(nation);
-        }
+        if (nation == null) return;
+        
+        owner_province = nation;
+        owner_province.AddNewProvince(this);
+        SetColorProvince(nation);
     }
 
     public void SetupProvinceTextName(GameObject prefab)

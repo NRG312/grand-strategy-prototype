@@ -1,30 +1,20 @@
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class NationManager : MonoBehaviour
 {
     [SerializeField] private NationSO[] nationSO;
-    public List<Nation> nations;
+    public List<Nation> nations = new List<Nation>();
     private void Awake()
     {
-        for (int i = 0; i < nationSO.Length; i++)
-        {
-            Nation newNation = new Nation(nationSO[i]);
-            nations.Add(newNation);
-        }
+        nations = nationSO.Select(so => new Nation(so)).ToList();
     }
 
     public Nation ReturnProvinceOwner(string ID) //check by ID what nation is
     {
-        foreach (var nation in nations)
-        {
-            if (nation.Data.NationID == ID)
-            {
-                return nation;
-            }
-        }
-        return null;
+        return nations.FirstOrDefault(nation => nation.Data.NationID == ID);
     }
 }

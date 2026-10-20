@@ -19,22 +19,24 @@ public class HighlightProvince : MonoBehaviour
 
     private void ChangeColor(ProvinceSelectEvent province)
     {
-        MeshRenderer mesh = province.selected_province.gameObject.GetComponent<MeshRenderer>();
+        MeshRenderer mesh = province.selected_province.transform.GetChild(0).GetComponent<MeshRenderer>();
         if (selected_province == null)
         {
             selected_province = province.selected_province;
-            mesh.material.color = Color.red;
+            mesh.material.color = Color.gold;
         }
         else if (selected_province != province.selected_province)
         {
-            selected_province.gameObject.GetComponent<MeshRenderer>().material.color = selected_province.owner_province.Data.NationColor;
+            selected_province.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = selected_province.owner_province.Data.NationColor;
             selected_province = province.selected_province;
-            mesh.material.color = Color.red;
+            mesh.material.color = Color.gold;
         }
     }
     private void ClearColors()
     {
-        selected_province.gameObject.GetComponent<MeshRenderer>().material.color = selected_province.owner_province.Data.NationColor;
+        if (selected_province == null) return;
+        
+        selected_province.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = selected_province.owner_province.Data.NationColor;
         selected_province = null;
     }
 }

@@ -14,17 +14,25 @@ public class PlanDzialania : MonoBehaviour
 
     //Na czym skonczylem i dalsza praca
 
-    //Skonczylem na robieniu box selectora 
+    //skonczylem na robieniu mapy(zrobilem optymalizacje poczatkowa, przydalyby sie kamienie i sciezki jakies proste dorobic, pnie powalone jako ozdobe rowniez)
 
-    //Musze zrobic zaznaczenie wielu jednostek na raz(albo osobna funkcja do zwracania obiektow albo po endSelection), Dokonczenie UI dla jednostek, usuwanie jednostek z garnizonu po stworzeniu armii, usuwanie armii i odeslanie do garnizonu jednostek
+    //Przed tym co na gorze co robilem
+    //Skonczylem na robieniu fabryki dla unitarmy,dodalem event dla zaznaczania armii,ulepszylem funkcje z garnizonem,ArmyProvinceUI,UnitArmy i ArmyManager
+    
+    //pomysly
+    //przemysl czy chodzenie armii powinno byc takie ze ida sami w tym kierunku czy np jak w europce ze zaznaczam na prowincje i na srodek prowincji sie kieruja w zaleznosci od predkosci
+    //, Dokonczenie UI dla jednostek, usuwanie armii i odeslanie do garnizonu jednostek, ustawienie aby jednostki nie wchodzily w siebie(Add army merging and management tak nazwij commita),trzeba dorobic namespacey
 
 
+    //Bledy
+    //jest blad jak klikne prowincje wypuszcze armie i chce kliknac na armie ta co zrobilem to wywala blad w highlightprovince znajdz przyczyne i zacznij robic ArmyUI aby szczegoly armii pokazalo
 
 
 
 
     //szybki opis jak dzialaja funkcje
 
+    //PROWINCJE
     //Selecting Province(podswietlanie)
     //eventmanager -> ProvinceSelectEvent -> ProvinceSelector(Wywołanie eventu) -> ProvinceManager,HighlightProvince,ProvinceUI
 
@@ -43,35 +51,38 @@ public class PlanDzialania : MonoBehaviour
     //Prototyp Przypisywania prowincji dla nowego ownera
     //Guzik w panelu province transfer -> ProvinceUI(setnewowenr) po ID -> Province(setnewowner) -> NationManager po ID wyszukuje dana nacje -> zwraca Nacje i province przypisuje nowego ownera
 
-
+    //ARMIA
     //Armia przeplyw danych do wyswietlenia UI w ArmyProvince
-    //Garnizon(klasa w Province)(trzyma referencje UnitType) -> ArmyUI sprawdza garnizon poprzez selected_province -> zapisuje w swojej liscie(UnitType) -> wyswietla dane na TMP_text
+    //Garnizon(klasa w Province)(trzyma referencje UnitType) -> ArmyProvinceUI zapisuje liste garnzonu -> sprawdza i inicjuje prefab w UI -> wyswietla dane
     //Armia przeplyw danych do wysweitlenia UI w ArmyUI
     // -------------------> tutaj dopisz jak zrobisz
     //Tworzenie Armii
-    //ArmyManager(Create Army) -> z objectPoola pobiera wolna jednostke -> tworzy jednostke z UnitArmy i przypisuje jej wszystkie dane -> ustawia pozycje i pobiera liste garnizonu do swoich jednostek
+    //ArmyProvinceUI wywoluje event przekierowujac province->ArmyManager(Create Army) -> z objectPoola pobiera wolna jednostke -> tworzy jednostke z UnitArmy i przypisuje jej wszystkie dane -> ustawia pozycje i pobiera liste garnizonu do swoich jednostek -> usuwa garnizon
     //Zaznaczanie armii(z box selectorem)
     //MapSelector -> wykrywa czy zaznaczam wiele obiektor -> przekazuje startposition i dane o zaznaczaniu wielu obiektow -> boxselector tworzy boxa i sprawdza po layerze co jest w srodku boxa -> zwraca liste obiektow zaznaczonych
+    //Zaznaczanie armii(wizualne na mapie)
+    //MapSelector zapisuje liste i wywoluje event UnitsArmySelectEvent -> w srodku mapselector sprawdza po liscie jakie sa zaznaczone armie -> wywoluje funkcje onselect dla poszczegolnego unitu
+    //System garnizonu w panelu prowincji
+    //ArmyProvinceUI trzyma wszystkie prefaby -> podczas selectowania prowincji odswieza garnizon i sprawdza jakie sa jednostki -> wlacza odpowiednia ilosc prefabow i inicjuje je -> usuwa kiedy wywolany jest event z tworzeniem armii w ArmyProvinceUI
 
+    //SUROWCE
+    //Przypisanie dla prowincji surowcow
+    //ProvinceSO -> ResourceDeposit ktory trzyma jaki surowiec wystepuje na tej prowincji(obfitosc, bonus za wykopanie) ->
 
-
-
-    //Nation zwykla klasa C# bo nie potrzebny jest jako obiekt, moge w nim stworzyc caly kraj i działac na aktualnych pieniadzach aktualnej armi i aktualnym wlascicielu
-
-    //Nation,NationManager,NationSO
-    //Province,ProvinceSO,ProvinceUI,HighlightProvince,ProvinceManager
-    //CameraMovement, ProvinceSelector
 
 
 
     //GAME ARCHITECTURE
+    //Nation,NationManager,NationSO
+    //Province,ProvinceSO,ProvinceUI,HighlightProvince,ProvinceManager
+    //CameraMovement, ProvinceSelector
 
     //NATION
     //- dane państwa
     //-runtime state
 
     //NationUI
-
+    //wysweitlanie szczegołów danej nacji
     //NATION MANAGER
     //-tworzenie Nation
     //- wyszukiwanie Nation
@@ -93,19 +104,23 @@ public class PlanDzialania : MonoBehaviour
     //- wyświetlanie informacji
 
     //UnitArmy
-
+    //unit armii tworzony na mapie
     //ArmyManager
 
     //BattleManager
 
     //UnitType
+    //typ jednostek jak kawaleria itp.
 
     //UnityTypeSO
 
-    //ArmyVisual
 
     //Garrison
     //w klasie Province trzyma dana ilosc garnizonu
 
+    //ArmyProvinceUI
+    //zarzadza armia w prowicji
+
     //ArmyUI
+    //zarzadza kliknieta armia
 }

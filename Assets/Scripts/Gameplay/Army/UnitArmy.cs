@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
+using Zenject;
 public class UnitArmy : MonoBehaviour
 {
+    [Inject] SignalBus _signal;
     private Province actual_province;
     [SerializeField] private SpriteRenderer visual_shield;
     [SerializeField] private SpriteRenderer nation_symbol;
@@ -28,29 +30,30 @@ public class UnitArmy : MonoBehaviour
     {
         mouse_actions.Enable();
         mouse_actions.MouseAction.RightButton.performed += SetNewPositionToMove;
+        //Events
+        _signal.Subscribe<UnitsArmyClearEvent>(UnSelectArmy);
     }
     private void OnDisable()
     {
         mouse_actions.MouseAction.RightButton.performed -= SetNewPositionToMove;
+        //Events
+        _signal.TryUnsubscribe<UnitsArmyClearEvent>(UnSelectArmy);
     }
-    public void InitUnit(Province province) //Init Province Unit after created
+    public void InitArmy(Province province) //Init Army in Province after created
     {
         actual_province = province;
-        nation_symbol.sprite = actual_province.owner_province.Data.NationOwnerFlag;
-        //
-        int amountGarrison = 0;
-        foreach (var item in actual_province.garrison.army_garrison)//Checking amount garrison for unit to set TMP text
-        {
-            amountGarrison += item.amount;
-        }
-        amount_army.text = amountGarrison.ToString();
-        // set list of units
-        foreach (var unit in province.garrison.army_garrison)
-        {
-            units.Add(unit);
-        }
+        Garrison garrison = actual_province.garrison;
+        units.AddRange(garrison.GetArmyGarrison());
+        SetGUI();
     }
-
+    private void SetGUI()
+    {
+        //Set nation flag
+        nation_symbol.sprite = actual_province.owner_province.Data.NationOwnerFlag;
+        //Checking amount garrison for unit to set TMP text
+        int amountGarrison = units.Sum(unit => unit.amount);
+        amount_army.text = amountGarrison.ToString();
+    }
     public void SelectArmy()
     {
         visual_shield.color = Color.red;
@@ -61,6 +64,8 @@ public class UnitArmy : MonoBehaviour
         visual_shield.color = Color.white;
         isUnitSelected = false;
     }
+
+    //poruszanie sie do zmiany
     private void SetNewPositionToMove(InputAction.CallbackContext context)
     {
         if (isUnitSelected)
@@ -90,4 +95,7 @@ public class UnitArmy : MonoBehaviour
             yield return null; //yield musi byc w srodku while aby co kazda klatek wykonywal sie lerp
         }
     }
+
+
+    public class Factory : PlaceholderFactory<UnitArmy> { }
 }

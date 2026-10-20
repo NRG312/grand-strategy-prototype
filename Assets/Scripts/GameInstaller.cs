@@ -3,6 +3,7 @@ using Zenject;
 
 public class GameInstaller : MonoInstaller
 {
+    [SerializeField] private UnitArmy army_prefab;
     public override void InstallBindings()
     {
         InstallManagers();
@@ -16,6 +17,9 @@ public class GameInstaller : MonoInstaller
 
         Container.DeclareSignal<ProvinceSelectEvent>();
         Container.DeclareSignal<ProvinceSelectClearEvent>();
+        Container.DeclareSignal<UnitsArmySelectEvent>();
+        Container.DeclareSignal<UnitsArmyClearEvent>();
+        Container.DeclareSignal<CreateArmyEvent>();
     }
     private void InstallManagers()
     {
@@ -23,9 +27,10 @@ public class GameInstaller : MonoInstaller
         Container.Bind<NationUI>().FromComponentInHierarchy().AsSingle();
         Container.Bind<ProvinceManager>().FromComponentInHierarchy().AsSingle();
         Container.Bind<ArmyManager>().FromComponentInHierarchy().AsSingle();
+        Container.Bind<ArmyUI>().FromComponentInHierarchy().AsSingle();
     }
     private void InstallGameplay()
     {
-
+        Container.BindFactory<UnitArmy, UnitArmy.Factory>().FromComponentInNewPrefab(army_prefab);
     }
 }
